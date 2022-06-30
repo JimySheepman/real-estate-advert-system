@@ -1,0 +1,81 @@
+version: "3.9"
+services:
+    rabbitmq:
+        hostname: rabbitmq
+        image: rabbitmq:3.8.14-management
+        container_name: 'rabbitmq'
+        restart: always
+        ports:
+            - 5672:5672
+            - 15672:15672
+        volumes:
+            - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/mnesia/
+        networks:
+            - test-network
+    
+    redis:
+        container_name: redis
+        image: redislabs/redismod:latest
+        restart: always
+        hostname: 'redis'
+        ports:
+        - 6379:6379
+        networks:
+            - test-network
+
+    postgres-login-service:
+        container_name: postgres-login-service
+        image: postgres:14-alpine
+        restart: always
+        environment:
+            POSTGRES_DB: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: root
+        ports:
+        - 5432:5432
+        networks:
+        - test-network
+        volumes: 
+        - ~/.docker-conf/postgres/data/:/var/lib/postgresql/data
+
+    postgres-advert-service:
+        container_name: postgres-advert-service
+        image: postgres:14-alpine
+        restart: always
+        environment:
+            POSTGRES_DB: postgres
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: root
+        ports:
+        - 5433:5432
+        networks:
+        - test-network
+        volumes: 
+        - ~/.docker-conf/postgres/data/:/var/lib/postgresql/data
+
+    mongo-report-service:
+        container_name: mongo-report-service
+        image: mongo
+        ports:
+        - 27017:27017
+        environment:
+        - MONGO_INITDB_ROOT_USERNAME=mongo
+        - MONGO_INITDB_ROOT_PASSWORD=root
+        networks:
+        - test-network
+
+    mongo-log-service:
+        container_name: mongo-log-service
+        image: mongo
+        ports:
+        - 27018:27017
+        environment:
+        - MONGO_INITDB_ROOT_USERNAME=mongo
+        - MONGO_INITDB_ROOT_PASSWORD=root
+        networks:
+        - test-network
+
+
+networks:
+    test-network:
+        driver: bridge  
