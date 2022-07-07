@@ -32,7 +32,7 @@ public class UserCreateDTO {
     private  String phoneNumber;
 
     @NotNull(message = "Email cannot be empty")
-    @Email(message = "Email is not valid", regexp = "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$")
+    // @Email(message = "Email is not valid", regexp = "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$")
     private String email;
 
     @NotNull(message = "Last Name cannot be null")

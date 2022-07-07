@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/login")
-public class LoginConroller {
+public class LoginController {
 
     @Autowired
     private TokenManager tokenManager;
@@ -24,6 +24,7 @@ public class LoginConroller {
     @PostMapping
     public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequest) {
         try {
+            // TODO: make a validate username and password
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
