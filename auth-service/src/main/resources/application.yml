@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: discovery-client
+  datasource:
+    url: jdbc:mysql://localhost:3306/mysql
+    username: root
+    password: pass
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+# eureka:
+#   client:
+#     serviceUrl:
+#       defaultZone: http://localhost:9999/eureka/
