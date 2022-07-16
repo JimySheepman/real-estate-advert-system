@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,23 +25,30 @@ public class AdvertServiceImpl implements AdvertService {
 
     @Override
     public void createAdvert(AdvertCreateDTO advertCreateDTO) {
+        Date createdAt = new Date();
+        Date updatedAt = new Date();
+
         advertRepository.save(
                 new Advert(
                         advertCreateDTO.getTitle(),
                         advertCreateDTO.getInformation(),
                         advertCreateDTO.getDescription(),
                         advertCreateDTO.getLocation(),
+                        createdAt,
+                        updatedAt,
                         advertCreateDTO.getPrice()));
     }
 
     @Override
     public AdvertViewDTO updateAdvert(Long id, AdvertUpdateDTO advertUpdateDTO) {
         final Advert advert = advertRepository.findById(id).orElseThrow(()-> new NotFoundException("Not Found Exception"));
+        Date updatedAt = new Date();
         advert.setTitle(advertUpdateDTO.getTitle());
         advert.setInformation(advertUpdateDTO.getInformation());
         advert.setDescription(advertUpdateDTO.getDescription());
         advert.setLocation(advertUpdateDTO.getLocation());
         advert.setPrice(advertUpdateDTO.getPrice());
+        advert.setUpdatedAt(updatedAt);
         advert.setStatus(false);
         return AdvertViewDTO.of(advert);
     }
@@ -48,7 +56,9 @@ public class AdvertServiceImpl implements AdvertService {
     @Override
     public AdvertViewDTO changeAdvertStatus(Long id, AdvertUpdateStatusDTO advertUpdateStatusDTO) {
         final Advert advert = advertRepository.findById(id).orElseThrow(()-> new NotFoundException("Not Found Exception"));
+        Date updatedAt = new Date();
         advert.setStatus(advertUpdateStatusDTO.isStatus());
+        advert.setUpdatedAt(updatedAt);
         return AdvertViewDTO.of(advert);
     }
 

@@ -3,13 +3,14 @@ package com.example.advertservice.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Data
 @Entity
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "advers")
+@Table(name = "adverts")
 public class Advert {
 
     @Id
@@ -19,12 +20,14 @@ public class Advert {
     private String information;
     private String description;
     private String location;
+    private Date createdAt;
+    private Date updatedAt;
     private String price;
 
     @Builder.Default
     private boolean status = false;
 
-    public Advert(String title, String information, String description, String location, String price) {
+    public Advert(String title, String information, String description, String location, Date createdAt, Date at, String price) {
         this.title = title;
         this.information = information;
         this.description = description;

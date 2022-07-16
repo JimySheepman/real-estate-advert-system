@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -16,6 +18,8 @@ public class AdvertViewDTO {
     private String information;
     private String description;
     private String location;
+    private Date createdAt;
+    private Date updatedAt;
     private String price;
 
     public static AdvertViewDTO of(Advert advert){
@@ -25,6 +29,8 @@ public class AdvertViewDTO {
                 advert.getInformation(),
                 advert.getDescription(),
                 advert.getLocation(),
+                advert.getCreatedAt(),
+                advert.getUpdatedAt(),
                 advert.getPrice());
     }
 }
