@@ -14,7 +14,7 @@ services:
             - test-network
 
     postgres-auth-service:
-        container_name: postgres-login-service
+        container_name: postgres-auth-service
         image: postgres:14-alpine
         restart: always
         environment:
@@ -29,7 +29,7 @@ services:
         - ~/.docker-conf/postgres/data/:/var/lib/postgresql/data
 
     postgres-advert-service:
-        container_name: postgres-login-service
+        container_name: postgres-advert-service
         image: postgres:14-alpine
         restart: always
         environment:
@@ -44,7 +44,7 @@ services:
             - ~/.docker-conf/postgres/data/:/var/lib/postgresql/data
 
     postgres-report-service:
-        container_name: postgres-advert-service
+        container_name: postgres-report-service
         image: postgres:14-alpine
         restart: always
         environment:

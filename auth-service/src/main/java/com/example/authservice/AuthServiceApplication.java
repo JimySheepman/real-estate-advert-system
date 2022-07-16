@@ -24,8 +24,23 @@ public class AuthServiceApplication {
 			userService.save(Role.builder().name("ROLE_USER").build());
 			userService.save(Role.builder().name("ROLE_ADMIN").build());
 
-			userService.save(User.builder().name("John").username("jdoe").password("1234").roles(new HashSet<>()).build());
-			userService.save(User.builder().name("John").username("jdoe2").password("1234").roles(new HashSet<>()).build());
+			userService.save(User.builder()
+					.name("John")
+					.surname("test")
+					.username("jdoe")
+					.password("1234")
+					.phoneNumber("12345")
+					.email("test@test.com")
+					.roles(new HashSet<>()).build());
+
+			userService.save(User.builder()
+					.name("John")
+					.surname("test")
+					.username("jdoe2")
+					.password("1234")
+					.phoneNumber("12345")
+					.email("test@test.com")
+					.roles(new HashSet<>()).build());
 
 			userService.addRoleTo("jdoe","ROLE_USER");
 			userService.addRoleTo("jdoe2","ROLE_ADMIN");

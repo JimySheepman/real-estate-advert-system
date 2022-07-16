@@ -1,8 +1,8 @@
 package com.example.authservice.controllers;
 
+import com.example.authservice.dto.AddRoleRequestDTO;
 import com.example.authservice.models.User;
 import com.example.authservice.services.UserService;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -28,13 +28,7 @@ public class UserController {
     }
 
     @PatchMapping
-    public void addRoles(@RequestBody AddRoleRequest request){
+    public void addRoles(@RequestBody AddRoleRequestDTO request){
     userService.addRoleTo(request.getUsername(),request.getRole());
-    }
-
-    @Data
-    static class AddRoleRequest{
-        private String username;
-        private String role;
     }
 }
