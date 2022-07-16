@@ -9,9 +9,8 @@ Spring Boot framework of a restful application for an advertisement system, whic
 * Test-driven development
 * Event-Driven Architecture
 * Containerization with Docker
-* Deployment with Kubernetes
 * Documentation with Swagger
-* Code Quality and Code Security sonarcloud
+* Code Quality and Code Security Sonarlint
 * Testing with Code Coverage > 80%
 
 ### Architecture
