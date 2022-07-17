@@ -1,3 +1,5 @@
+server:
+  port: 8083
 spring:
   application:
     name: report-service
@@ -11,5 +13,11 @@ spring:
     hibernate:
       ddl-auto: create
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-server:
-  port: 8083
+sr:
+  rabbit:
+    queue:
+      name: advert-queue
+    routing:
+      name: advert-routing
+    exchange:
+      name: advert-exchange

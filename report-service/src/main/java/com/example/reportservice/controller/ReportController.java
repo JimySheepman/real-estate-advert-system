@@ -1,8 +1,8 @@
 package com.example.reportservice.controller;
 
 
+import com.example.reportservice.dto.ReportUpdateDTO;
 import com.example.reportservice.dto.ReportViewDTO;
-import com.example.reportservice.model.Report;
 import com.example.reportservice.service.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,12 +16,14 @@ public class ReportController {
     private final ReportService reportService;
 
     @GetMapping("/{id}")
-    public Report getReportById(@PathVariable Long id){
-        return reportService.getReportById(id);
+    public ResponseEntity<ReportViewDTO> getReportById(@PathVariable Long id) {
+        ReportViewDTO report = reportService.getReportById(id);
+        return ResponseEntity.status(200).body(report);
     }
 
-    @PostMapping
-    public Report save(@RequestBody Report report){
-        return reportService.save(report);
+    @PutMapping("/{id}")
+    public ResponseEntity<ReportViewDTO> save(@PathVariable("id") Long id, @RequestBody ReportUpdateDTO reportUpdateDTO) {
+        ReportViewDTO report =reportService.save(reportUpdateDTO,id);
+        return ResponseEntity.status(200).body(report);
     }
 }

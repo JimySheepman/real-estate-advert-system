@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Data
@@ -17,12 +18,12 @@ public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
     private String username;
-    private String createdAt;
+    private Date createdAt;
     private int views;
 
-    public Report(String username, String createAt, int views) {
+    public Report(String username, Date createAt, int views) {
         this.username = username;
         this.createdAt = createAt;
         this.views = views;
