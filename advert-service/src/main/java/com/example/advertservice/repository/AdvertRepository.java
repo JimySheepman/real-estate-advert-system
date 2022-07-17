@@ -10,7 +10,7 @@ import java.util.List;
 @Repository
 public interface AdvertRepository extends JpaRepository<Advert,Long> {
     // TODO: how to add where conditon
-    // List<Advert> findAllByStatusAndFindTop10ByOrderByIdAsc(Boolean status);
+    // List<Advert> findAllByStatusAndFindTop10ByOrderByIdAsc(boolean status);
     List<Advert> findTop10ByOrderByIdDesc();
-    List<Advert> findAllByStatus(Boolean status);
+    List<Advert> findAllByStatus(boolean status);
 }

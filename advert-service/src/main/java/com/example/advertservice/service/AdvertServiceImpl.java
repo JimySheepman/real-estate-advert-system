@@ -2,12 +2,10 @@ package com.example.advertservice.service;
 
 import com.example.advertservice.dto.*;
 import com.example.advertservice.exception.NotFoundException;
+import com.example.advertservice.mapper.AdvertModelMapper;
 import com.example.advertservice.model.Advert;
 import com.example.advertservice.repository.AdvertRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,21 +20,14 @@ public class AdvertServiceImpl implements AdvertService {
 
     private final AdvertRepository advertRepository;
 
+    private final AdvertModelMapper advertModelMapper;
+
     @Override
     public void createAdvert(AdvertCreateDTO advertCreateDTO) {
         Date createdAt = new Date();
         Date updatedAt = new Date();
-        System.out.println(createdAt+"\n"+updatedAt);
 
-        advertRepository.save(
-                new Advert(
-                        advertCreateDTO.getTitle(),
-                        advertCreateDTO.getInformation(),
-                        advertCreateDTO.getDescription(),
-                        advertCreateDTO.getLocation(),
-                        createdAt,
-                        updatedAt,
-                        advertCreateDTO.getPrice()));
+        advertRepository.save( advertModelMapper.toAdvert(advertCreateDTO,createdAt,updatedAt));
     }
 
     @Override
@@ -65,11 +56,17 @@ public class AdvertServiceImpl implements AdvertService {
 
 
     @Override
-    public List<AdvertViewDTO> findTop10ByOrderBySalaryDesc() {
+    public List<AdvertViewDTO> findTop10ByOrderByIdDesc() {
         return advertRepository.findTop10ByOrderByIdDesc()
                 .stream()
                 .map(AdvertViewDTO::of)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public AdvertSendProducerDTO getAdvertForSent(Long id) {
+        final Advert advert = advertRepository.findById(id).orElseThrow(()-> new NotFoundException("Not Found Exception"));
+        return advertModelMapper.toAdvertSendProducerDTO(advert);
     }
 
     @Override
@@ -78,6 +75,14 @@ public class AdvertServiceImpl implements AdvertService {
                 .stream()
                 .map(AdvertViewForAdminDTO::of)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public AdvertViewDTO getAdvert(Long id) {
+        final Advert advert = advertRepository.findById(id).orElseThrow(()-> new NotFoundException("Not Found Exception"));
+        advert.setAdvertViews(advert.getAdvertViews()+1);
+        advertRepository.save(advert);
+        return advertModelMapper.toAdvertViewDTO(advert);
     }
 
 }

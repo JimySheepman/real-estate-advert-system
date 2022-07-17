@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
+//@EnableSwagger2
+//@ServletComponentScan
 public class AdvertServiceApplication {
 
 	public static void main(String[] args) {

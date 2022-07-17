@@ -1,4 +1,4 @@
-package com.example.authservice.configuration;
+package com.example.advertservice.configuration;
 
 import org.springframework.context.annotation.Bean;
 import springfox.documentation.builders.ApiInfoBuilder;

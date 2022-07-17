@@ -21,8 +21,9 @@ public class AdvertViewDTO {
     private Date createdAt;
     private Date updatedAt;
     private String price;
+    private int views;
 
-    public static AdvertViewDTO of(Advert advert){
+    public static AdvertViewDTO of(Advert advert) {
         return new AdvertViewDTO(
                 advert.getId(),
                 advert.getTitle(),
@@ -31,6 +32,7 @@ public class AdvertViewDTO {
                 advert.getLocation(),
                 advert.getCreatedAt(),
                 advert.getUpdatedAt(),
-                advert.getPrice());
+                advert.getPrice(),
+                advert.getAdvertViews());
     }
 }

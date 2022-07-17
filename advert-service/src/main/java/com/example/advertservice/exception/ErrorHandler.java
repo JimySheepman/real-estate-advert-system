@@ -1,4 +1,4 @@
-package com.example.authservice.error;
+package com.example.advertservice.exception;
 
 import org.springframework.dao.InvalidDataAccessResourceUsageException;
 import org.springframework.http.HttpStatus;
@@ -18,6 +18,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ErrorHandler {
+
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
@@ -84,4 +85,7 @@ public class ErrorHandler {
         errors.put("errorMessage", ex.getMessage());
         return errors;
     }
+
+
+
 }
