@@ -21,3 +21,5 @@ sr:
       name: advert-routing
     exchange:
       name: advert-exchange
+api-call:
+  uri: http://localhost:8081/api/v1/token/

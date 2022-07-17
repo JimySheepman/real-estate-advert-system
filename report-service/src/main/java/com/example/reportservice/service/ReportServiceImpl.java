@@ -30,8 +30,4 @@ public class ReportServiceImpl implements ReportService{
         return reportModelMapper.toReportViewDTO(report);
     }
 
-    @Override
-    public ReportCreateDTO save(ReportCreateDTO reportCreateDTO) {
-        return reportRepository.save(reportCreateDTO);
-    }
 }

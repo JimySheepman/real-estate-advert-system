@@ -4,7 +4,9 @@ import com.example.reportservice.dto.ConsumerReceiveMessageDTO;
 import com.example.reportservice.dto.ReportUpdateDTO;
 import com.example.reportservice.dto.ReportViewDTO;
 import com.example.reportservice.model.Report;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ReportModelMapper {
     public ReportViewDTO toReportViewDTO(Report report) {
         return ReportViewDTO
