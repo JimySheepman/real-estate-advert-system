@@ -27,7 +27,7 @@ services:
         networks:
         - test-network
         volumes: 
-        - ~/.docker-conf/postgres/data/:/var/lib/postgresql/data
+        - ~/.docker-conf/postgres/data1/:/var/lib/postgresql/data
 
     postgres-advert-service:
         container_name: postgres-advert-service
@@ -42,7 +42,7 @@ services:
         networks:
             - test-network
         volumes:
-            - ~/.docker-conf/postgres/data/:/var/lib/postgresql/data
+            - ~/.docker-conf/postgres/data2/:/var/lib/postgresql/data
 
     postgres-report-service:
         container_name: postgres-report-service
@@ -57,7 +57,7 @@ services:
         networks:
         - test-network
         volumes: 
-        - ~/.docker-conf/postgres/data/:/var/lib/postgresql/data
+        - ~/.docker-conf/postgres/data3/:/var/lib/postgresql/data
 
 networks:
     test-network:
