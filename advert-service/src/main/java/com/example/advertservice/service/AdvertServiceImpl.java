@@ -53,11 +53,12 @@ public class AdvertServiceImpl implements AdvertService {
         return AdvertViewDTO.of(advert);
     }
 
+
     @Override
-    public AdvertViewDTO changeAdvertStatus(Long id, AdvertUpdateStatusDTO advertUpdateStatusDTO) {
+    public AdvertViewDTO changeAdvertStatus(Long id, boolean isApproved) {
         final Advert advert = advertRepository.findById(id).orElseThrow(()-> new NotFoundException("Not Found Exception"));
         Date updatedAt = new Date();
-        advert.setStatus(advertUpdateStatusDTO.isStatus());
+        advert.setStatus(isApproved);
         advert.setUpdatedAt(updatedAt);
         return AdvertViewDTO.of(advert);
     }

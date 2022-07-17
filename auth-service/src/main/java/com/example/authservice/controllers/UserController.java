@@ -1,40 +1,34 @@
 package com.example.authservice.controllers;
 
-import com.example.authservice.dto.AddRoleRequestDTO;
+import com.example.authservice.dto.CreateUserRequestModel;
+import com.example.authservice.dto.UserResponseModel;
+import com.example.authservice.models.Role;
 import com.example.authservice.models.User;
 import com.example.authservice.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<?> save(@RequestBody User user){
-        userService.save(user);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+    public ResponseEntity<UserResponseModel> save(@RequestBody @Valid CreateUserRequestModel createUserDTO){
+        return ResponseEntity.ok(userService.save(createUserDTO, Role.USER));
     }
 
-
-    @GetMapping("/api/v1/users")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public List<User> list(){
+    @GetMapping("/users")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
+    public List<UserResponseModel> list(){
         return userService.list();
     }
 
-
-    @PatchMapping("/api/v1/users")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public void addRoles(@RequestBody AddRoleRequestDTO request){
-    userService.addRoleTo(request.getUsername(),request.getRole());
-    }
 }
