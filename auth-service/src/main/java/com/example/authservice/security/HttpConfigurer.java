@@ -1,12 +1,16 @@
 package com.example.authservice.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@RequiredArgsConstructor
 public class HttpConfigurer extends AbstractHttpConfigurer<HttpConfigurer, HttpSecurity> {
+
+    private final JwtUtil jwtUtil;
 
     @Override
     public void init(HttpSecurity builder) throws Exception{
@@ -28,11 +32,11 @@ public class HttpConfigurer extends AbstractHttpConfigurer<HttpConfigurer, HttpS
 
         builder
                 .addFilter(new JwtAuthenticationFilter(authenticationManager))
-                .addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthorizationFilter(jwtUtil), UsernamePasswordAuthenticationFilter.class);
 
     }
 
     public static HttpConfigurer httpConfigurer(){
-        return new HttpConfigurer();
+        return new HttpConfigurer(new JwtUtil());
     }
 }
