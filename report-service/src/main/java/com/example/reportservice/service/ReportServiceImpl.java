@@ -1,6 +1,5 @@
 package com.example.reportservice.service;
 
-import com.example.reportservice.dto.ReportViewDTO;
 import com.example.reportservice.exception.NotFoundException;
 import com.example.reportservice.model.Report;
 import com.example.reportservice.repository.ReportRepository;

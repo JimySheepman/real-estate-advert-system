@@ -22,7 +22,7 @@ public class ReportViewDTO {
         return new ReportViewDTO(
                 report.getId(),
                 report.getUsername(),
-                report.getCreateAt(),
+                report.getCreatedAt(),
                 report.getViews()
         );
     }

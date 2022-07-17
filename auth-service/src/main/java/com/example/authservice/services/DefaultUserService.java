@@ -1,8 +1,9 @@
 package com.example.authservice.services;
 
+import com.example.authservice.dto.CreateUserRequestModel;
+import com.example.authservice.mappers.UserMapper;
 import com.example.authservice.models.Role;
 import com.example.authservice.models.User;
-import com.example.authservice.repositories.RoleRepository;
 import com.example.authservice.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -13,8 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -22,25 +23,18 @@ import java.util.stream.Collectors;
 public class DefaultUserService implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
+    // private final UserMapper userMapper;
     @Override
-    public User save(User user) {
+    public User save(CreateUserRequestModel createUserRequestModel, Role role) {
+
+        // User user = userMapper.toUser(createUserRequestModel);
+        User user = new User();
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setRole(role);
+
         return userRepository.save(user);
-    }
-
-    @Override
-    public Role save(Role role) {
-        return roleRepository.save(role);
-    }
-
-    @Override
-    public void addRoleTo(String username, String roleName) {
-        User user = userRepository.findByUsername(username);
-        Role role = roleRepository.findByName(roleName);
-        user.getRoles().add(role);
-        userRepository.save(user);
     }
 
     @Override
@@ -59,7 +53,10 @@ public class DefaultUserService implements UserService, UserDetailsService {
         if (user == null){
             throw  new UsernameNotFoundException("User not found");
         }
-        List<SimpleGrantedAuthority> authorities = user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
+
+        ArrayList<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority(user.getRole().toString()));
+
 
 return new org.springframework.security.core.userdetails.User(user.getUsername(),user.getPassword(),authorities);
     }
