@@ -1,9 +1,6 @@
 package com.example.advertservice.service;
 
-import com.example.advertservice.dto.AdvertCreateDTO;
-import com.example.advertservice.dto.AdvertUpdateDTO;
-import com.example.advertservice.dto.AdvertUpdateStatusDTO;
-import com.example.advertservice.dto.AdvertViewDTO;
+import com.example.advertservice.dto.*;
 import com.example.advertservice.exception.NotFoundException;
 import com.example.advertservice.model.Advert;
 import com.example.advertservice.repository.AdvertRepository;
@@ -65,21 +62,20 @@ public class AdvertServiceImpl implements AdvertService {
         return AdvertViewDTO.of(advert);
     }
 
-    @Override
-    public List<AdvertViewDTO> slice(Pageable pageable) {
-
-        return advertRepository
-                .findAll(pageable)
-                .stream()
-                .map(AdvertViewDTO::of)
-                .collect(Collectors.toList());
-    }
 
     @Override
     public List<AdvertViewDTO> findTop10ByOrderBySalaryDesc() {
         return advertRepository.findTop10ByOrderByIdDesc()
                 .stream()
                 .map(AdvertViewDTO::of)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AdvertViewForAdminDTO> getAllDisabledAdvert() {
+        return advertRepository.findAllByStatus(false)
+                .stream()
+                .map(AdvertViewForAdminDTO::of)
                 .collect(Collectors.toList());
     }
 

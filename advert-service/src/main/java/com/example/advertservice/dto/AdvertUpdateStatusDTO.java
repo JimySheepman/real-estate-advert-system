@@ -10,6 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AdvertUpdateStatusDTO {
-    private Long id;
     private boolean status;
 }

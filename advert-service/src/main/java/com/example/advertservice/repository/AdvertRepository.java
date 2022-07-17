@@ -12,4 +12,5 @@ public interface AdvertRepository extends JpaRepository<Advert,Long> {
     // TODO: how to add where conditon
     // List<Advert> findAllByStatusAndFindTop10ByOrderByIdAsc(Boolean status);
     List<Advert> findTop10ByOrderByIdDesc();
+    List<Advert> findAllByStatus(Boolean status);
 }
