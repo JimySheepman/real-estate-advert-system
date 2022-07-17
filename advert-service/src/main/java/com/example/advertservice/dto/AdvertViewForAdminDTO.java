@@ -22,7 +22,8 @@ public class AdvertViewForAdminDTO {
     private Date createdAt;
     private Date updatedAt;
     private String price;
-    private Boolean status;
+    private int views;
+    private boolean status;
 
     public static AdvertViewForAdminDTO of(Advert advert){
         return new AdvertViewForAdminDTO(
@@ -34,6 +35,7 @@ public class AdvertViewForAdminDTO {
                 advert.getCreatedAt(),
                 advert.getUpdatedAt(),
                 advert.getPrice(),
+                advert.getAdvertViews(),
                 advert.isStatus());
     }
 }

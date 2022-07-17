@@ -1,3 +1,5 @@
+server:
+  port: 8082
 spring:
   application:
     name: advert-service
@@ -11,6 +13,16 @@ spring:
     hibernate:
       ddl-auto: create
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-server:
-  port: 8082
-services:
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+sr:
+  rabbit:
+    queue:
+      name: advert-queue
+    routing:
+      name: advert-routing
+    exchange:
+      name: advert-exchange

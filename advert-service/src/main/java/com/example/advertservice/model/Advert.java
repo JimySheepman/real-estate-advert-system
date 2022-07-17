@@ -25,6 +25,9 @@ public class Advert {
     private String price;
 
     @Builder.Default
+    private int advertViews = 0;
+
+    @Builder.Default
     private boolean status = false;
 
     public Advert(String title, String information, String description, String location, Date createdAt, Date updatedAt, String price) {
