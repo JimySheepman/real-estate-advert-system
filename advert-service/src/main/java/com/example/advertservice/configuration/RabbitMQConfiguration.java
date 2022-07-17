@@ -20,7 +20,7 @@ public class RabbitMQConfiguration {
     @Value("${sr.rabbit.routing.name}")
     private String routingName;
     @Value("${sr.rabbit.exchange.name}")
-    private String excahngeName;
+    private String exchangeName;
 
     private final RabbitTemplate rabbitTemplate;
 
@@ -31,7 +31,7 @@ public class RabbitMQConfiguration {
 
     @Bean
     public DirectExchange directExchange(){
-        return new DirectExchange(excahngeName);
+        return new DirectExchange(exchangeName);
     }
 
     @Bean
