@@ -8,6 +8,8 @@ import com.example.advertservice.exception.NotFoundException;
 import com.example.advertservice.model.Advert;
 import com.example.advertservice.repository.AdvertRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +29,7 @@ public class AdvertServiceImpl implements AdvertService {
     public void createAdvert(AdvertCreateDTO advertCreateDTO) {
         Date createdAt = new Date();
         Date updatedAt = new Date();
+        System.out.println(createdAt+"\n"+updatedAt);
 
         advertRepository.save(
                 new Advert(
@@ -71,4 +74,13 @@ public class AdvertServiceImpl implements AdvertService {
                 .map(AdvertViewDTO::of)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<AdvertViewDTO> findTop10ByOrderBySalaryDesc() {
+        return advertRepository.findTop10ByOrderByIdDesc()
+                .stream()
+                .map(AdvertViewDTO::of)
+                .collect(Collectors.toList());
+    }
+
 }

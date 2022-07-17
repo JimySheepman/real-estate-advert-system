@@ -27,11 +27,13 @@ public class Advert {
     @Builder.Default
     private boolean status = false;
 
-    public Advert(String title, String information, String description, String location, Date createdAt, Date at, String price) {
+    public Advert(String title, String information, String description, String location, Date createdAt, Date updatedAt, String price) {
         this.title = title;
         this.information = information;
         this.description = description;
         this.location = location;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
         this.price = price;
     }
 }

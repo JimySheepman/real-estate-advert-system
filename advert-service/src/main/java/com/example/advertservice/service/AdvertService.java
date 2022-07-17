@@ -13,4 +13,5 @@ public interface AdvertService {
     AdvertViewDTO updateAdvert(Long id, AdvertUpdateDTO advertUpdateDTO);
     AdvertViewDTO changeAdvertStatus(Long id, AdvertUpdateStatusDTO advertUpdateStatusDTO);
     List<AdvertViewDTO>  slice(Pageable pageable);
+    List<AdvertViewDTO> findTop10ByOrderBySalaryDesc();
 }

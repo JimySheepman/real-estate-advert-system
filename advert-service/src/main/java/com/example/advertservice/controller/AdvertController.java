@@ -21,6 +21,12 @@ public class AdvertController {
 
     private final AdvertService advertService;
 
+    @GetMapping
+    public ResponseEntity<List<AdvertViewDTO>> findTop10ByOrderBySalaryDesc(){
+        final List<AdvertViewDTO> users = advertService.findTop10ByOrderBySalaryDesc();
+        return ResponseEntity.ok(users);
+    }
+
     @PostMapping
     public ResponseEntity<?> createAdvert(@RequestBody AdvertCreateDTO advertCreateDTO){
         advertService.createAdvert(advertCreateDTO);
