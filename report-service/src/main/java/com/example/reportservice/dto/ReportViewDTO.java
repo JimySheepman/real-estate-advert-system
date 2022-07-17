@@ -2,19 +2,22 @@ package com.example.reportservice.dto;
 
 import com.example.reportservice.model.Report;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Id;
+import java.util.Date;
 
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReportViewDTO {
-    @Id
-    private String id;
+
+    private Long id;
     private String username;
-    private String createAt;
+    private Date createdAt;
     private int views;
 
 
