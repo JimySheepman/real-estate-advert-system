@@ -1,6 +1,5 @@
 package com.example.authservice.dto;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Builder
 @AllArgsConstructor
@@ -15,22 +15,23 @@ import javax.validation.constraints.NotBlank;
 @Data
 public class CreateUserRequestModel {
 
-    @NotBlank
+    @NotBlank(message = "name is mandatory")
+    @Size(min = 3, max = 16)
     private String name;
 
-    @NotBlank
+    @NotBlank(message = "surname is mandatory")
     private String surname;
 
-    @NotBlank
+    @NotBlank(message = "username is mandatory")
     private String username;
 
-    @NotBlank
+    @NotBlank(message = "password is mandatory")
     private String password;
 
-    @NotBlank
+    @NotBlank(message = "phone number is mandatory")
     private String phoneNumber;
 
-    @NotBlank
-    @Email
+    @NotBlank(message = "email is mandatory")
+    @Email(message = "email must be valid")
     private String email;
 }

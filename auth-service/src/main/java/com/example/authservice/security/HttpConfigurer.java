@@ -13,7 +13,11 @@ public class HttpConfigurer extends AbstractHttpConfigurer<HttpConfigurer, HttpS
         builder
                 .cors().and().csrf().disable()
                 .authorizeRequests((auth)->{
-                    auth.anyRequest().authenticated();
+                    auth
+                            .antMatchers("/api/v1/register").permitAll()
+                            .antMatchers("/login").permitAll()
+                            .anyRequest()
+                            .authenticated();
                 })
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
     }

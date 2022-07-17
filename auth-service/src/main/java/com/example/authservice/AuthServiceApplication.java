@@ -18,7 +18,7 @@ public class AuthServiceApplication {
 	@Bean
 	CommandLineRunner commandLineRunner(UserService userService){
 		return args -> {
-/*
+
 			CreateUserRequestModel rootUser =  CreateUserRequestModel
 					.builder()
 					.name("admin")
@@ -29,7 +29,7 @@ public class AuthServiceApplication {
 					.email("admin@admin.com")
 					.build();
 
-			userService.save(rootUser,Role.USER);
+			userService.save(rootUser,Role.ADMIN);
 
 
 			CreateUserRequestModel regularUser =  CreateUserRequestModel
@@ -43,7 +43,6 @@ public class AuthServiceApplication {
 					.build();
 
 			userService.save(regularUser, Role.USER);
-*/
 		};
 	}
 }
