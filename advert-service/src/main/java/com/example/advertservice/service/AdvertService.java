@@ -8,7 +8,7 @@ import java.util.List;
 public interface AdvertService {
     void createAdvert(AdvertCreateDTO advertCreateDTO);
     AdvertViewDTO updateAdvert(Long id, AdvertUpdateDTO advertUpdateDTO);
-    AdvertViewDTO changeAdvertStatus(Long id, AdvertUpdateStatusDTO advertUpdateStatusDTO);
+    AdvertViewDTO changeAdvertStatus(Long id, boolean isApproved);
 
     List<AdvertViewDTO> findTop10ByOrderBySalaryDesc();
 

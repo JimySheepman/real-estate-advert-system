@@ -3,7 +3,6 @@ package com.example.advertservice.controller;
 import com.example.advertservice.dto.*;
 import com.example.advertservice.service.AdvertService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdvertController {
 
+    // findById - GET views ekle
     private final AdvertService advertService;
 
     @GetMapping
@@ -41,9 +41,15 @@ public class AdvertController {
         return ResponseEntity.ok(disabledAdverts);
     }
 
-    @PatchMapping("/manage/{id}")
-    public ResponseEntity<AdvertViewDTO> changeAdvertStatus(@PathVariable("id")  Long id,  @RequestBody AdvertUpdateStatusDTO advertUpdateStatusDTO){
-        final AdvertViewDTO advert = advertService.changeAdvertStatus(id,advertUpdateStatusDTO);
+    @PatchMapping("/manage/{id}/approve")
+    public ResponseEntity<AdvertViewDTO> changeAdvertStatusApprove(@PathVariable("id")  Long id){
+        final AdvertViewDTO advert = advertService.changeAdvertStatus(id,true);
+        return  ResponseEntity.ok(advert);
+    }
+
+    @PatchMapping("/manage/{id}/disapprove")
+    public ResponseEntity<AdvertViewDTO> changeAdvertStatusDisapprove(@PathVariable("id")  Long id){
+        final AdvertViewDTO advert = advertService.changeAdvertStatus(id,false);
         return  ResponseEntity.ok(advert);
     }
 

@@ -13,3 +13,8 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
 server:
   port: 8081
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs

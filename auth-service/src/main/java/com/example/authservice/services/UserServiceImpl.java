@@ -31,20 +31,10 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserResponseModel save(CreateUserRequestModel createUserRequestModel, Role role) {
-
-        User user = User.builder()
-                .name(createUserRequestModel.getName())
-                .surname(createUserRequestModel.getSurname())
-                .username(createUserRequestModel.getUsername())
-                .password(bCryptPasswordEncoder.encode(createUserRequestModel.getPassword()))
-                .phoneNumber(createUserRequestModel.getPhoneNumber())
-                .email(createUserRequestModel.getEmail())
-                .role(role)
-                .build();
-
+        User user = userModelMapper.toUser(createUserRequestModel,role);
         User createdUser = userRepository.save(user);
-        return userModelMapper.toUserResponseModel(createdUser);
 
+        return userModelMapper.toUserResponseModel(createdUser);
     }
 
     @Override
