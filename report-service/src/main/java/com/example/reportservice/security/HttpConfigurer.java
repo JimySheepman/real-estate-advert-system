@@ -28,7 +28,7 @@ public class HttpConfigurer extends AbstractHttpConfigurer<HttpConfigurer, HttpS
 
         builder
                 .addFilter(new JwtAuthenticationFilter(authenticationManager))
-                .addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JwtAuthorizationFilter(""), UsernamePasswordAuthenticationFilter.class);
 
     }
 

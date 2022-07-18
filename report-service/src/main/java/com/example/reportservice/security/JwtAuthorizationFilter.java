@@ -52,7 +52,7 @@ public class JwtAuthorizationFilter extends OncePerRequestFilter {
                 HttpRequest authRequest = HttpRequest.newBuilder()
                         .GET()
                         .uri(URI.create(uri+token))
-                        .setHeader("Authorization", "Bearer "+token) // add request header
+                        .setHeader("Authorization", "Bearer "+token)
                         .build();
 
 

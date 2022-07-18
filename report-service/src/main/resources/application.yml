@@ -1,25 +1,39 @@
 server:
-  port: 8083
+  port: ${SERVISE_PORT}
+
 spring:
   application:
     name: report-service
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5434/postgres
-    username: postgres
-    password: root
+    url: ${POSTGRES_CONNECTION_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+  rabbitmq:
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
+
 sr:
   rabbit:
     queue:
-      name: advert-queue
+      name: ${QUEUE_NAME}
     routing:
-      name: advert-routing
+      name:  ${ROUTING_NAME}
     exchange:
-      name: advert-exchange
+      name: ${EXCHANGE_NAME}
+
 api-call:
-  uri: http://localhost:8081/api/v1/token/
+  uri:  ${API_CALL_URI}
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs
