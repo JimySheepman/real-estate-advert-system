@@ -6,7 +6,7 @@ import com.example.advertservice.service.AdvertService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-// import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +33,7 @@ public class AdvertController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','USER')")
     public ResponseEntity<?> createAdvert(@RequestBody AdvertCreateDTO advertCreateDTO){
         advertService.createAdvert(advertCreateDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -45,14 +46,14 @@ public class AdvertController {
     }
 
     @GetMapping("/manage/rejects")
-    // @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<List<AdvertViewForAdminDTO>> getAllDisabledAdvert(){
         final List<AdvertViewForAdminDTO> disabledAdverts = advertService.getAllDisabledAdvert();
         return ResponseEntity.ok(disabledAdverts);
     }
 
     @PatchMapping("/manage/{id}/approve")
-    // @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<AdvertViewDTO> changeAdvertStatusApprove(@PathVariable("id")  Long id){
         final AdvertViewDTO advert = advertService.changeAdvertStatus(id,true);
         final AdvertSendProducerDTO advertSendProducerDTO = advertService.getAdvertForSent(advert.getId());
@@ -61,7 +62,7 @@ public class AdvertController {
     }
 
     @PatchMapping("/manage/{id}/disapprove")
-    // @PreAuthorize("hasAnyAuthority('ADMIN')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<AdvertViewDTO> changeAdvertStatusDisapprove(@PathVariable("id")  Long id){
         final AdvertViewDTO advert = advertService.changeAdvertStatus(id,false);
         return  ResponseEntity.ok(advert);
