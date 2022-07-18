@@ -2,7 +2,7 @@ version: "3.9"
 services:
     rabbitmq:
         hostname: rabbitmq
-        image: rabbitmq:3.8.14-management
+        image: rabbitmq:3.8.11-management
         container_name: 'rabbitmq'
         restart: always
         ports:
@@ -23,11 +23,11 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: root
         ports:
-        - 5432:5432
+            - 5432:5432
         networks:
-        - test-network
-        volumes: 
-        - ~/.docker-conf/postgres/data1/:/var/lib/postgresql/data
+            - test-network
+        volumes:
+            - ~/.docker-conf/postgres/data1/:/var/lib/postgresql/data
 
     postgres-advert-service:
         container_name: postgres-advert-service
@@ -53,12 +53,96 @@ services:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: root
         ports:
-        - 5434:5432
+            - 5434:5432
         networks:
-        - test-network
-        volumes: 
-        - ~/.docker-conf/postgres/data3/:/var/lib/postgresql/data
+            - test-network
+        volumes:
+            - ~/.docker-conf/postgres/data3/:/var/lib/postgresql/data
+
+
+    auth-service:
+        image: auth-service:latest
+        container_name: auth-service
+        restart: always
+        build:
+            context: .
+            dockerfile: ./auth-service/Dockerfile
+        environment:
+            POSTGRES_CONNECTION_URL: jdbc:postgresql://postgres-auth-service:5432/postgres
+            POSTGRES_USERNAME: postgres
+            POSTGRES_PASSWORD: root
+            SERVISE_PORT: 8081
+        ports:
+            - 8081:8081
+        depends_on:
+            - postgres-auth-service
+        volumes:
+            - ~/.docker-conf/auth:/code
+        networks:
+            - test-network
+
+    advert-service:
+        image: advert-service:latest
+        container_name: advert-service
+        restart: always
+        build:
+            context: .
+            dockerfile: ./advert-service/Dockerfile
+        environment:
+            SERVISE_PORT: 8082
+            POSTGRES_CONNECTION_URL: jdbc:postgresql://postgres-advert-service:5432/postgres
+            POSTGRES_USERNAME: postgres
+            POSTGRES_PASSWORD: root
+            RABBITMQ_HOST: rabbitmq
+            RABBITMQ_PORT: 5672
+            RABBITMQ_USERNAME: guest
+            RABBITMQ_PASSWORD: guest
+            QUEUE_NAME: advert-queue
+            ROUTING_NAME: advert-routing
+            EXCHANGE_NAME: advert-exchange
+            API_CALL_URI: http://auth-service/api/v1/token/
+        ports:
+            - 8082:8082
+        depends_on:
+            - postgres-advert-service
+            - auth-service
+        volumes:
+            - ~/.docker-conf/advert:/code
+        networks:
+            - test-network
+
+
+
+    report-service:
+        image: report-service:latest
+        container_name: report-service
+        restart: always
+        build:
+            context: .
+            dockerfile: ./report-service/Dockerfile
+        environment:
+            SERVISE_PORT: 8083
+            POSTGRES_CONNECTION_URL: jdbc:postgresql://postgres-report-service:5432/postgres
+            POSTGRES_USERNAME: postgres
+            POSTGRES_PASSWORD: root
+            RABBITMQ_HOST: rabbitmq
+            RABBITMQ_PORT: 5672
+            RABBITMQ_USERNAME: guest
+            RABBITMQ_PASSWORD: guest
+            QUEUE_NAME: advert-queue
+            ROUTING_NAME: advert-routing
+            EXCHANGE_NAME: advert-exchange
+            API_CALL_URI: http://auth-service/api/v1/token/
+        ports:
+            - 8083:8083
+        depends_on:
+            - postgres-report-service
+            - auth-service
+        volumes:
+            - ~/.docker-conf/report:/code
+        networks:
+            - test-network
 
 networks:
     test-network:
-        driver: bridge  
+        driver: bridge
