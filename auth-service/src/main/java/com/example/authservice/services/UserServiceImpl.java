@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     @Override
     public UserResponseModel save(CreateUserRequestModel createUserRequestModel, Role role) {
-        User user = userModelMapper.toUser(createUserRequestModel,role);
+        User user = userModelMapper.toUser(createUserRequestModel, role);
         User createdUser = userRepository.save(user);
 
         return userModelMapper.toUserResponseModel(createdUser);

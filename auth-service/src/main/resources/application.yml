@@ -1,18 +1,20 @@
+server:
+  port: ${SERVISE_PORT}
+
 spring:
   application:
     name: auth-service
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres
-    username: postgres
-    password: root
+    url: ${POSTGRES_CONNECTION_URL}
+    username: ${POSTGRES_USERNAME}
+    password: ${POSTGRES_PASSWORD}
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: create
     database-platform: org.hibernate.dialect.PostgreSQLDialect
-server:
-  port: 8081
+
 springfox:
   documentation:
     swagger:
